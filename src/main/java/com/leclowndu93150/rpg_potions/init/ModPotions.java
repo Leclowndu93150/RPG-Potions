@@ -30,7 +30,7 @@ public class ModPotions {
             () -> new Potion(new MobEffectInstance(ModEffects.PROJECTILE_REBOUND, 300)));
 
     public static final DeferredHolder<Potion, Potion> HEAT_MARK = POTIONS.register("heat_mark",
-            () -> new Potion(new MobEffectInstance(ModEffects.HEAT_MARK, 300)));
+            () -> new Potion(new MobEffectInstance(ModEffects.HEAT_MARK, 600)));
 
     public static final DeferredHolder<Potion, Potion> BLACK_STAIN = POTIONS.register("black_stain",
             () -> new Potion(new MobEffectInstance(ModEffects.BLACK_STAIN, 150)));

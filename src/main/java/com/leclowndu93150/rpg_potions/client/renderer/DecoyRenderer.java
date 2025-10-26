@@ -37,14 +37,17 @@ public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEnt
     
     @Override
     public ResourceLocation getTextureLocation(DecoyEntity entity) {
+        UUID playerUUID = entity.getPlayerUUID();
         String playerName = entity.getPlayerSkin();
-        if (playerName == null || playerName.isEmpty()) {
+        
+        if (playerUUID == null || playerName == null || playerName.isEmpty()) {
             return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/player/wide/steve.png");
         }
         
-        return skinCache.computeIfAbsent(playerName, name -> {
+        String cacheKey = playerUUID.toString();
+        return skinCache.computeIfAbsent(cacheKey, uuid -> {
             try {
-                GameProfile profile = new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes()), name);
+                GameProfile profile = new GameProfile(playerUUID, playerName);
                 Minecraft mc = Minecraft.getInstance();
                 PlayerSkin skin = mc.getSkinManager().getInsecureSkin(profile);
                 return skin.texture();

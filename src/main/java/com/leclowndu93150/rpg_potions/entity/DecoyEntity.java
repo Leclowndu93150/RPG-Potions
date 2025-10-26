@@ -7,6 +7,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import java.util.UUID;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.Level;
 public class DecoyEntity extends PathfinderMob {
     private static final EntityDataAccessor<String> PLAYER_NAME = SynchedEntityData.defineId(DecoyEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<String> PLAYER_SKIN = SynchedEntityData.defineId(DecoyEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<String> PLAYER_UUID = SynchedEntityData.defineId(DecoyEntity.class, EntityDataSerializers.STRING);
     private int lifeTicks = 0;
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(4, ItemStack.EMPTY);
     private final NonNullList<ItemStack> handItems = NonNullList.withSize(2, ItemStack.EMPTY);
@@ -33,6 +35,7 @@ public class DecoyEntity extends PathfinderMob {
         super(ModEntities.DECOY.get(), level);
         this.entityData.set(PLAYER_NAME, player.getName().getString());
         this.entityData.set(PLAYER_SKIN, player.getGameProfile().getName());
+        this.entityData.set(PLAYER_UUID, player.getUUID().toString());
         this.setCustomName(player.getName());
         this.setCustomNameVisible(false);
         
@@ -55,6 +58,7 @@ public class DecoyEntity extends PathfinderMob {
         super.defineSynchedData(builder);
         builder.define(PLAYER_NAME, "");
         builder.define(PLAYER_SKIN, "");
+        builder.define(PLAYER_UUID, "");
     }
     
     @Override
@@ -81,6 +85,7 @@ public class DecoyEntity extends PathfinderMob {
         compound.putInt("LifeTicks", lifeTicks);
         compound.putString("PlayerName", this.entityData.get(PLAYER_NAME));
         compound.putString("PlayerSkin", this.entityData.get(PLAYER_SKIN));
+        compound.putString("PlayerUUID", this.entityData.get(PLAYER_UUID));
         
         ListTag armorList = new ListTag();
         for (ItemStack stack : this.armorItems) {
@@ -119,6 +124,7 @@ public class DecoyEntity extends PathfinderMob {
         lifeTicks = compound.getInt("LifeTicks");
         this.entityData.set(PLAYER_NAME, compound.getString("PlayerName"));
         this.entityData.set(PLAYER_SKIN, compound.getString("PlayerSkin"));
+        this.entityData.set(PLAYER_UUID, compound.getString("PlayerUUID"));
         
         if (compound.contains("ArmorItems", 9)) {
             ListTag armorList = compound.getList("ArmorItems", 10);
@@ -148,6 +154,18 @@ public class DecoyEntity extends PathfinderMob {
     
     public String getPlayerSkin() {
         return this.entityData.get(PLAYER_SKIN);
+    }
+    
+    public UUID getPlayerUUID() {
+        String uuidStr = this.entityData.get(PLAYER_UUID);
+        if (uuidStr == null || uuidStr.isEmpty()) {
+            return null;
+        }
+        try {
+            return UUID.fromString(uuidStr);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
     
     @Override

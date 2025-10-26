@@ -50,7 +50,7 @@ public class ModCreativeTabs {
                         output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, ModPotions.BLACK_STAIN.getDelegate()));
                         output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, ModPotions.BLACK_STAIN.getDelegate()));
                         
-                        output.accept(ModItems.DECOY_SPAWN_EGG.get());
+                        //output.accept(ModItems.DECOY_SPAWN_EGG.get());
                     })
                     .build());
 }
