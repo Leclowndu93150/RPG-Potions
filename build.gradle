@@ -103,16 +103,6 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
-mixin {
-    add sourceSets.main, 'structures_tweaker.refmap.json'
-    config 'rpg_potions.mixins.json'
-}
-
-jar {
-    manifest.attributes([
-            "MixinConfigs": "rpg_potions.mixins.json"
-    ])
-}
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
