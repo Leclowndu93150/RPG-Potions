@@ -11,38 +11,47 @@
   "item.minecraft.potion.effect.smoke": "Potion of Smoke",
   "item.minecraft.splash_potion.effect.smoke": "Splash Potion of Smoke",
   "item.minecraft.lingering_potion.effect.smoke": "Lingering Potion of Smoke",
+  "item.minecraft.tipped_arrow.effect.smoke": "Arrow of Smoke",
   
   "item.minecraft.potion.effect.decoy": "Potion of Decoy",
   "item.minecraft.splash_potion.effect.decoy": "Splash Potion of Decoy",
   "item.minecraft.lingering_potion.effect.decoy": "Lingering Potion of Decoy",
+  "item.minecraft.tipped_arrow.effect.decoy": "Arrow of Decoy",
   
   "item.minecraft.potion.effect.knockback": "Potion of Knockback",
   "item.minecraft.splash_potion.effect.knockback": "Splash Potion of Knockback",
   "item.minecraft.lingering_potion.effect.knockback": "Lingering Potion of Knockback",
+  "item.minecraft.tipped_arrow.effect.knockback": "Arrow of Knockback",
   
   "item.minecraft.potion.effect.phantom_armor": "Potion of Phantom Armor",
   "item.minecraft.splash_potion.effect.phantom_armor": "Splash Potion of Phantom Armor",
   "item.minecraft.lingering_potion.effect.phantom_armor": "Lingering Potion of Phantom Armor",
+  "item.minecraft.tipped_arrow.effect.phantom_armor": "Arrow of Phantom Armor",
   
   "item.minecraft.potion.effect.paralysis": "Potion of Mild Paralysis",
   "item.minecraft.splash_potion.effect.paralysis": "Splash Potion of Mild Paralysis",
   "item.minecraft.lingering_potion.effect.paralysis": "Lingering Potion of Mild Paralysis",
+  "item.minecraft.tipped_arrow.effect.paralysis": "Arrow of Mild Paralysis",
   
   "item.minecraft.potion.effect.projectile_rebound": "Potion of Projectile Rebound",
   "item.minecraft.splash_potion.effect.projectile_rebound": "Splash Potion of Projectile Rebound",
   "item.minecraft.lingering_potion.effect.projectile_rebound": "Lingering Potion of Projectile Rebound",
+  "item.minecraft.tipped_arrow.effect.projectile_rebound": "Arrow of Projectile Rebound",
   
   "item.minecraft.potion.effect.heat_mark": "Potion of Heat Mark",
   "item.minecraft.splash_potion.effect.heat_mark": "Splash Potion of Heat Mark",
   "item.minecraft.lingering_potion.effect.heat_mark": "Lingering Potion of Heat Mark",
+  "item.minecraft.tipped_arrow.effect.heat_mark": "Arrow of Heat Mark",
   
   "item.minecraft.potion.effect.black_stain": "Potion of Black Stain",
   "item.minecraft.splash_potion.effect.black_stain": "Splash Potion of Black Stain",
   "item.minecraft.lingering_potion.effect.black_stain": "Lingering Potion of Black Stain",
+  "item.minecraft.tipped_arrow.effect.black_stain": "Arrow of Black Stain",
   
   "item.rpg_potions.decoy_spawn_egg": "Decoy Spawn Egg",
   
   "entity.rpg_potions.decoy": "Decoy",
+  "entity.rpg_potions.smoke_emitter": "Smoke Emitter",
   
   "itemGroup.rpg_potions": "RPG Potions"
 }

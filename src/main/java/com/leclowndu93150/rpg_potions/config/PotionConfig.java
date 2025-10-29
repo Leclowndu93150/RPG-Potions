@@ -1,41 +1,42 @@
 package com.leclowndu93150.rpg_potions.config;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.neoforge.common.ModConfigSpec;
+
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import static com.leclowndu93150.rpg_potions.RPGPotions.MODID;
 
-@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PotionConfig {
-    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    public static final ModConfigSpec.IntValue SMOKE_DURATION;
-    public static final ModConfigSpec.IntValue SMOKE_RADIUS;
-    public static final ModConfigSpec.IntValue SMOKE_PARTICLE_DENSITY;
+    public static final ForgeConfigSpec.IntValue SMOKE_DURATION;
+    public static final ForgeConfigSpec.IntValue SMOKE_RADIUS;
+    public static final ForgeConfigSpec.IntValue SMOKE_PARTICLE_DENSITY;
 
-    public static final ModConfigSpec.DoubleValue DECOY_HEALTH;
+    public static final ForgeConfigSpec.DoubleValue DECOY_HEALTH;
 
-    public static final ModConfigSpec.DoubleValue KNOCKBACK_STRENGTH;
-    public static final ModConfigSpec.DoubleValue KNOCKBACK_VERTICAL_MULTIPLIER;
+    public static final ForgeConfigSpec.DoubleValue KNOCKBACK_STRENGTH;
+    public static final ForgeConfigSpec.DoubleValue KNOCKBACK_VERTICAL_MULTIPLIER;
 
-    public static final ModConfigSpec.IntValue PHANTOM_ARMOR_HITS;
-    public static final ModConfigSpec.IntValue PHANTOM_ARMOR_VULNERABLE_DURATION;
-    public static final ModConfigSpec.DoubleValue PHANTOM_ARMOR_VULNERABLE_MULTIPLIER;
+    public static final ForgeConfigSpec.IntValue PHANTOM_ARMOR_HITS;
+    public static final ForgeConfigSpec.IntValue PHANTOM_ARMOR_VULNERABLE_DURATION;
+    public static final ForgeConfigSpec.DoubleValue PHANTOM_ARMOR_VULNERABLE_MULTIPLIER;
 
-    public static final ModConfigSpec.IntValue PARALYSIS_DURATION;
-    public static final ModConfigSpec.DoubleValue PARALYSIS_SPEED_MULTIPLIER;
+    public static final ForgeConfigSpec.IntValue PARALYSIS_DURATION;
+    public static final ForgeConfigSpec.DoubleValue PARALYSIS_SPEED_MULTIPLIER;
 
-    public static final ModConfigSpec.IntValue PROJECTILE_REBOUND_DURATION;
-    public static final ModConfigSpec.BooleanValue PROJECTILE_REBOUND_FULL_DAMAGE;
+    public static final ForgeConfigSpec.IntValue PROJECTILE_REBOUND_DURATION;
+    public static final ForgeConfigSpec.BooleanValue PROJECTILE_REBOUND_FULL_DAMAGE;
 
-    public static final ModConfigSpec.IntValue HEAT_MARK_DURATION;
-    public static final ModConfigSpec.DoubleValue HEAT_MARK_DAMAGE_MULTIPLIER;
-    public static final ModConfigSpec.IntValue HEAT_MARK_GLOW_COLOR;
+    public static final ForgeConfigSpec.IntValue HEAT_MARK_DURATION;
+    public static final ForgeConfigSpec.DoubleValue HEAT_MARK_DAMAGE_MULTIPLIER;
+    public static final ForgeConfigSpec.IntValue HEAT_MARK_GLOW_COLOR;
 
-    public static final ModConfigSpec.IntValue BLACK_STAIN_DURATION;
-    public static final ModConfigSpec.IntValue BLACK_STAIN_INTENSITY;
+    public static final ForgeConfigSpec.IntValue BLACK_STAIN_DURATION;
+    public static final ForgeConfigSpec.IntValue BLACK_STAIN_INTENSITY;
 
     static {
         BUILDER.push("Smoke Potion");
@@ -99,7 +100,7 @@ public class PotionConfig {
         BUILDER.pop();
     }
 
-    public static final ModConfigSpec SPEC = BUILDER.build();
+    public static final ForgeConfigSpec SPEC = BUILDER.build();
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {

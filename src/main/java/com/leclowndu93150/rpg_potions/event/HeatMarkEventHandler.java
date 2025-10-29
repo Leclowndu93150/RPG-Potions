@@ -5,18 +5,16 @@ import com.leclowndu93150.rpg_potions.init.ModEffects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrownPotion;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
 
 import static com.leclowndu93150.rpg_potions.RPGPotions.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class HeatMarkEventHandler {
     
     private static final String CASTER_UUID_TAG = "rpg_potions:heat_mark_caster";
@@ -26,7 +24,7 @@ public class HeatMarkEventHandler {
         LivingEntity entity = event.getEntity();
         MobEffectInstance effectInstance = event.getEffectInstance();
         
-        if (effectInstance.getEffect() == ModEffects.HEAT_MARK) {
+        if (effectInstance.getEffect() == ModEffects.HEAT_MARK.get()) {
             if (event.getEffectSource() instanceof LivingEntity caster) {
                 System.out.println("Heat Mark applied to entity: " + entity.getUUID() + " by caster: " + caster.getUUID());
                 CompoundTag data = entity.getPersistentData();
@@ -39,7 +37,7 @@ public class HeatMarkEventHandler {
     public static void onEffectRevmoed(MobEffectEvent.Remove event) {
         LivingEntity entity = event.getEntity();
 
-        if (event.getEffectInstance().getEffect().is(ModEffects.HEAT_MARK)) {
+        if (event.getEffectInstance().getEffect() == ModEffects.HEAT_MARK.get()) {
             entity.setGlowingTag(false);
             entity.getPersistentData().remove(CASTER_UUID_TAG);
         }
@@ -49,25 +47,25 @@ public class HeatMarkEventHandler {
     public static void onEffectExpired(MobEffectEvent.Expired event) {
         LivingEntity entity = event.getEntity();
         
-        if (event.getEffectInstance().getEffect().is(ModEffects.HEAT_MARK)) {
+        if (event.getEffectInstance().getEffect() == ModEffects.HEAT_MARK.get()) {
             entity.setGlowingTag(false);
             entity.getPersistentData().remove(CASTER_UUID_TAG);
         }
     }
     
     @SubscribeEvent
-    public static void onLivingDamage(LivingDamageEvent.Pre event) {
+    public static void onLivingDamage(LivingDamageEvent event) {
         LivingEntity entity = event.getEntity();
         
-        if (entity.hasEffect(ModEffects.HEAT_MARK)) {
+        if (entity.hasEffect(ModEffects.HEAT_MARK.get())) {
             CompoundTag data = entity.getPersistentData();
             
             if (data.hasUUID(CASTER_UUID_TAG) && event.getSource().getEntity() instanceof LivingEntity attacker) {
                 UUID casterUUID = data.getUUID(CASTER_UUID_TAG);
                 
                 if (attacker.getUUID().equals(casterUUID)) {
-                    float damage = event.getContainer().getNewDamage();
-                    event.getContainer().setNewDamage((float) (damage * PotionConfig.HEAT_MARK_DAMAGE_MULTIPLIER.get()));
+                    float damage = event.getAmount();
+                    event.setAmount((float) (damage * PotionConfig.HEAT_MARK_DAMAGE_MULTIPLIER.get()));
                 }
             }
         }

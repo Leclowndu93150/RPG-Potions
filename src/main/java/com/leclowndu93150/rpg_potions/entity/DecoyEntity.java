@@ -43,7 +43,7 @@ public class DecoyEntity extends PathfinderMob {
             ItemStack item = player.getItemBySlot(slot).copy();
             if (slot.getType() == EquipmentSlot.Type.HAND) {
                 this.handItems.set(slot.getIndex(), item);
-            } else if (slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+            } else if (slot.getType() == EquipmentSlot.Type.ARMOR) {
                 this.armorItems.set(slot.getIndex(), item);
             }
         }
@@ -54,11 +54,11 @@ public class DecoyEntity extends PathfinderMob {
     }
     
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(PLAYER_NAME, "");
-        builder.define(PLAYER_SKIN, "");
-        builder.define(PLAYER_UUID, "");
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(PLAYER_NAME, "");
+        this.entityData.define(PLAYER_SKIN, "");
+        this.entityData.define(PLAYER_UUID, "");
     }
     
     @Override
@@ -89,31 +89,31 @@ public class DecoyEntity extends PathfinderMob {
         
         ListTag armorList = new ListTag();
         for (ItemStack stack : this.armorItems) {
+            CompoundTag tag = new CompoundTag();
             if (!stack.isEmpty()) {
-                armorList.add(stack.save(this.registryAccess()));
-            } else {
-                armorList.add(new CompoundTag());
+                stack.save(tag);
             }
+            armorList.add(tag);
         }
         compound.put("ArmorItems", armorList);
         
         ListTag handList = new ListTag();
         for (ItemStack stack : this.handItems) {
+            CompoundTag tag = new CompoundTag();
             if (!stack.isEmpty()) {
-                handList.add(stack.save(this.registryAccess()));
-            } else {
-                handList.add(new CompoundTag());
+                stack.save(tag);
             }
+            handList.add(tag);
         }
         compound.put("HandItems", handList);
         
         ListTag inventoryList = new ListTag();
         for (ItemStack stack : this.inventoryItems) {
+            CompoundTag tag = new CompoundTag();
             if (!stack.isEmpty()) {
-                inventoryList.add(stack.save(this.registryAccess()));
-            } else {
-                inventoryList.add(new CompoundTag());
+                stack.save(tag);
             }
+            inventoryList.add(tag);
         }
         compound.put("InventoryItems", inventoryList);
     }
@@ -129,21 +129,21 @@ public class DecoyEntity extends PathfinderMob {
         if (compound.contains("ArmorItems", 9)) {
             ListTag armorList = compound.getList("ArmorItems", 10);
             for (int i = 0; i < armorList.size() && i < this.armorItems.size(); i++) {
-                this.armorItems.set(i, ItemStack.parse(this.registryAccess(), armorList.getCompound(i)).orElse(ItemStack.EMPTY));
+                this.armorItems.set(i, ItemStack.of(armorList.getCompound(i)));
             }
         }
         
         if (compound.contains("HandItems", 9)) {
             ListTag handList = compound.getList("HandItems", 10);
             for (int i = 0; i < handList.size() && i < this.handItems.size(); i++) {
-                this.handItems.set(i, ItemStack.parse(this.registryAccess(), handList.getCompound(i)).orElse(ItemStack.EMPTY));
+                this.handItems.set(i, ItemStack.of(handList.getCompound(i)));
             }
         }
         
         if (compound.contains("InventoryItems", 9)) {
             ListTag inventoryList = compound.getList("InventoryItems", 10);
             for (int i = 0; i < inventoryList.size() && i < this.inventoryItems.size(); i++) {
-                this.inventoryItems.set(i, ItemStack.parse(this.registryAccess(), inventoryList.getCompound(i)).orElse(ItemStack.EMPTY));
+                this.inventoryItems.set(i, ItemStack.of(inventoryList.getCompound(i)));
             }
         }
     }
@@ -172,7 +172,7 @@ public class DecoyEntity extends PathfinderMob {
     public ItemStack getItemBySlot(EquipmentSlot slot) {
         if (slot.getType() == EquipmentSlot.Type.HAND) {
             return this.handItems.get(slot.getIndex());
-        } else if (slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+        } else if (slot.getType() == EquipmentSlot.Type.ARMOR) {
             return this.armorItems.get(slot.getIndex());
         }
         return ItemStack.EMPTY;
@@ -182,7 +182,7 @@ public class DecoyEntity extends PathfinderMob {
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
         if (slot.getType() == EquipmentSlot.Type.HAND) {
             this.handItems.set(slot.getIndex(), stack);
-        } else if (slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+        } else if (slot.getType() == EquipmentSlot.Type.ARMOR) {
             this.armorItems.set(slot.getIndex(), stack);
         }
     }

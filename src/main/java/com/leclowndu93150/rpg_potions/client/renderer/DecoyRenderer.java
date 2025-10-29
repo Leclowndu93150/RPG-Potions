@@ -13,10 +13,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Map;
 import java.util.UUID;
@@ -41,7 +40,7 @@ public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEnt
         String playerName = entity.getPlayerSkin();
         
         if (playerUUID == null || playerName == null || playerName.isEmpty()) {
-            return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/player/wide/steve.png");
+            return new ResourceLocation("minecraft", "textures/entity/player/wide/steve.png");
         }
         
         String cacheKey = playerUUID.toString();
@@ -49,10 +48,20 @@ public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEnt
             try {
                 GameProfile profile = new GameProfile(playerUUID, playerName);
                 Minecraft mc = Minecraft.getInstance();
-                PlayerSkin skin = mc.getSkinManager().getInsecureSkin(profile);
-                return skin.texture();
+                mc.getSkinManager().registerSkins(profile, (type, location, texture) -> {
+                    if (type == MinecraftProfileTexture.Type.SKIN) {
+                        skinCache.put(cacheKey, location);
+                    }
+                }, true);
+                
+                ResourceLocation cached = skinCache.get(cacheKey);
+                if (cached != null) {
+                    return cached;
+                }
+                
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/steve.png");
             } catch (Exception e) {
-                return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/player/wide/steve.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/steve.png");
             }
         });
     }

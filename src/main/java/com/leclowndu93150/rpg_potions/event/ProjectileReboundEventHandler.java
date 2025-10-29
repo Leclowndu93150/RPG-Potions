@@ -8,13 +8,13 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import static com.leclowndu93150.rpg_potions.RPGPotions.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class ProjectileReboundEventHandler {
     
     @SubscribeEvent
@@ -24,7 +24,7 @@ public class ProjectileReboundEventHandler {
         Projectile projectile = event.getProjectile();
         Entity target = entityHit.getEntity();
         
-        if (target instanceof LivingEntity livingTarget && livingTarget.hasEffect(ModEffects.PROJECTILE_REBOUND)) {
+        if (target instanceof LivingEntity livingTarget && livingTarget.hasEffect(ModEffects.PROJECTILE_REBOUND.get())) {
             Entity shooter = projectile.getOwner();
             
             if (shooter != null && shooter != target) {

@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
-    id 'net.neoforged.moddev' version '2.0.115'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.+'
 }
 
 version = mod_version
@@ -11,19 +11,20 @@ group = mod_group_id
 repositories {
     mavenLocal()
     maven {
-        url = "https://cursemaven.com/"
+        url = "https://cursemaven.com"
     }
 }
 
 base {
-    archivesName = mod_id+"-1.21.1-NeoForge"
+    archivesName = mod_id+"-1.20.1-Forge"
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-neoForge {
+legacyForge {
     // Specify the version of NeoForge to use.
-    version = project.neo_version
+    version = "1.20.1-47.3.0"
+    validateAccessTransformers = false
 
     parchment {
         mappingsVersion = project.parchment_mappings_version
@@ -99,7 +100,18 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 dependencies {
-    implementation "curse.maven:jei-238222:7129287"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, 'structures_tweaker.refmap.json'
+    config 'rpg_potions.mixins.json'
+}
+
+jar {
+    manifest.attributes([
+            "MixinConfigs": "rpg_potions.mixins.json"
+    ])
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -126,7 +138,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 // this works with both building through Gradle and the IDE.
 sourceSets.main.resources.srcDir generateModMetadata
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
-neoForge.ideSyncTask generateModMetadata
+legacyForge.ideSyncTask generateModMetadata
 
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {
@@ -140,6 +152,10 @@ publishing {
             url "file://${project.projectDir}/repo"
         }
     }
+}
+
+tasks.named('createMinecraftArtifacts') {
+    dependsOn 'generateModMetadata'
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
