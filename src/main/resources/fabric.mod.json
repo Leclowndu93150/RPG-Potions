@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "rpg_potions",
+  "version": "${version}",
+  "name": "RPG Potions",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/rpg_potions/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.leclowndu93150.rpg_potions.client.RPGPotionsClient"
+    ],
+    "main": [
+      "com.leclowndu93150.rpg_potions.RPGPotions"
+    ]
+  },
+  "mixins": [
+    "rpg_potions.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
