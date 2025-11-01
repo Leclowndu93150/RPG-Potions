@@ -15,7 +15,7 @@ import net.minecraft.world.entity.MobCategory;
 public class ModEntities {
     public static final EntityType<DecoyEntity> DECOY = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,
-            new ResourceLocation(RPGPotions.MODID, "decoy"),
+            ResourceLocation.fromNamespaceAndPath(RPGPotions.MODID, "decoy"),
             FabricEntityTypeBuilder.<DecoyEntity>create(MobCategory.MISC, (type, level) -> new DecoyEntity(type, level))
                     .dimensions(EntityDimensions.fixed(0.6F, 1.8F))
                     .trackRangeChunks(8)
@@ -24,7 +24,7 @@ public class ModEntities {
     
     public static final EntityType<SmokeEmitterEntity> SMOKE_EMITTER = Registry.register(
             BuiltInRegistries.ENTITY_TYPE,
-            new ResourceLocation(RPGPotions.MODID, "smoke_emitter"),
+            ResourceLocation.fromNamespaceAndPath(RPGPotions.MODID, "smoke_emitter"),
             FabricEntityTypeBuilder.<SmokeEmitterEntity>create(MobCategory.MISC, (type, level) -> new SmokeEmitterEntity(type, level))
                     .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
                     .trackRangeChunks(10)

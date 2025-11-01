@@ -33,7 +33,7 @@ public class ModPotions {
             new Potion(new MobEffectInstance(ModEffects.BLACK_STAIN, 150)));
 
     private static Potion registerPotion(String name, Potion potion) {
-        return Registry.register(BuiltInRegistries.POTION, new ResourceLocation(RPGPotions.MODID, name), potion);
+        return Registry.register(BuiltInRegistries.POTION, ResourceLocation.fromNamespaceAndPath(RPGPotions.MODID, name), potion);
     }
 
     public static void register() {

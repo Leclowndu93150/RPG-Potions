@@ -4,13 +4,13 @@ import com.leclowndu93150.rpg_potions.config.PotionConfig;
 import com.leclowndu93150.rpg_potions.entity.SmokeEmitterEntity;
 import com.leclowndu93150.rpg_potions.init.ModEffects;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrownPotion;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.phys.HitResult;
 
 public class SmokeEventHandler {
@@ -30,15 +30,15 @@ public class SmokeEventHandler {
             return true;
         }
         
-        Potion potion = PotionUtils.getPotion(thrownPotion.getItem());
-        if (potion == null) {
+        PotionContents potionContents = thrownPotion.getItem().get(DataComponents.POTION_CONTENTS);
+        if (potionContents == null) {
             return true;
         }
         
         boolean hasSmokeEffect = false;
         int duration = 200;
         
-        for (MobEffectInstance effect : potion.getEffects()) {
+        for (MobEffectInstance effect : potionContents.getAllEffects()) {
             if (effect.getEffect() == ModEffects.SMOKE) {
                 hasSmokeEffect = true;
                 duration = effect.getDuration();

@@ -3,6 +3,7 @@ package com.leclowndu93150.rpg_potions.mixin;
 import com.leclowndu93150.rpg_potions.event.HeatMarkEventHandler;
 import com.leclowndu93150.rpg_potions.event.PhantomArmorEventHandler;
 import com.leclowndu93150.rpg_potions.init.ModEffects;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -44,15 +45,15 @@ public abstract class LivingEntityMixin implements com.leclowndu93150.rpg_potion
     }
     
     @Inject(method = "removeEffect", at = @At("RETURN"))
-    private void onEffectRemoved(MobEffect effect, CallbackInfoReturnable<Boolean> cir) {
+    private void onEffectRemoved(Holder<MobEffect> holder, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             LivingEntity self = (LivingEntity)(Object)this;
             
-            if (effect == ModEffects.HEAT_MARK) {
+            if (holder.value() == ModEffects.HEAT_MARK.value()) {
                 HeatMarkEventHandler.onEffectRemoved(self);
             }
             
-            if (effect == ModEffects.PHANTOM_ARMOR) {
+            if (holder.value() == ModEffects.PHANTOM_ARMOR.value()) {
                 PhantomArmorEventHandler.onEffectRemoved(self);
             }
         }

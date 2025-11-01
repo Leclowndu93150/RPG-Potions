@@ -3,6 +3,7 @@ package com.leclowndu93150.rpg_potions.client;
 import com.leclowndu93150.rpg_potions.config.PotionConfig;
 import com.leclowndu93150.rpg_potions.init.ModEffects;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 public class BlackStainOverlay implements HudRenderCallback {
     
     @Override
-    public void onHudRender(GuiGraphics guiGraphics, float tickDelta) {
+    public void onHudRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         

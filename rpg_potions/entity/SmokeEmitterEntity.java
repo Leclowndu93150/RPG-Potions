@@ -17,16 +17,15 @@ public class SmokeEmitterEntity extends Entity {
     public SmokeEmitterEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
-
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-
-    }
-
+    
     public SmokeEmitterEntity(Level level, double x, double y, double z, int duration) {
-        super(ModEntities.SMOKE_EMITTER, level);
+        super(ModEntities.SMOKE_EMITTER.get(), level);
         this.setPos(x, y, z);
         this.duration = duration;
+    }
+    
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
     }
     
     @Override
@@ -34,8 +33,8 @@ public class SmokeEmitterEntity extends Entity {
         super.tick();
         
         if (this.level() instanceof ServerLevel serverLevel) {
-            int radius = PotionConfig.SMOKE_RADIUS;
-            int density = PotionConfig.SMOKE_PARTICLE_DENSITY;
+            int radius = PotionConfig.SMOKE_RADIUS.get();
+            int density = PotionConfig.SMOKE_PARTICLE_DENSITY.get();
             
             for (int i = 0; i < density; i++) {
                 double theta = this.random.nextDouble() * 2 * Math.PI;

@@ -15,32 +15,35 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+@OnlyIn(Dist.CLIENT)
 public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEntity>> {
     private final Map<String, ResourceLocation> skinCache = new ConcurrentHashMap<>();
-
+    
     public DecoyRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5F);
-        this.addLayer(new HumanoidArmorLayer<>(this,
-                new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
-                new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)),
-                context.getModelManager()));
+        this.addLayer(new HumanoidArmorLayer<>(this, 
+            new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
+            new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)),
+            context.getModelManager()));
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
     }
-
+    
     @Override
     public ResourceLocation getTextureLocation(DecoyEntity entity) {
         UUID playerUUID = entity.getPlayerUUID();
         String playerName = entity.getPlayerSkin();
-
+        
         if (playerUUID == null || playerName == null || playerName.isEmpty()) {
             return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/player/wide/steve.png");
         }
-
+        
         String cacheKey = playerUUID.toString();
         return skinCache.computeIfAbsent(cacheKey, uuid -> {
             try {
@@ -53,7 +56,7 @@ public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEnt
             }
         });
     }
-
+    
     @Override
     public void render(DecoyEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
