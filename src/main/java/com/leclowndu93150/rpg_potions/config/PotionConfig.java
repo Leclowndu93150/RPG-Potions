@@ -96,7 +96,7 @@ public class PotionConfig {
         BLACK_STAIN_DURATION = BUILDER.comment("Duration in ticks")
                 .defineInRange("duration", 150, 20, 600);
         BLACK_STAIN_INTENSITY = BUILDER.comment("Intensity of the visual effect (0-100)")
-                .defineInRange("intensity", 12, 0, 100);
+                .defineInRange("intensity", 5, 0, 100);
         BUILDER.pop();
     }
 
