@@ -44,20 +44,6 @@ public abstract class LivingEntityMixin implements com.leclowndu93150.rpg_potion
         }
     }
     
-    @Inject(method = "removeEffect", at = @At("RETURN"))
-    private void onEffectRemoved(Holder<MobEffect> holder, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValue()) {
-            LivingEntity self = (LivingEntity)(Object)this;
-            
-            if (holder.value() == ModEffects.HEAT_MARK.value()) {
-                HeatMarkEventHandler.onEffectRemoved(self);
-            }
-            
-            if (holder.value() == ModEffects.PHANTOM_ARMOR.value()) {
-                PhantomArmorEventHandler.onEffectRemoved(self);
-            }
-        }
-    }
     
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
