@@ -37,7 +37,7 @@ public class HeatMarkEventHandler {
     public static void onEffectRevmoed(MobEffectEvent.Remove event) {
         LivingEntity entity = event.getEntity();
 
-        if (event.getEffectInstance().getEffect() == ModEffects.HEAT_MARK.get()) {
+        if (event.getEffectInstance() != null && event.getEffectInstance().getEffect() == ModEffects.HEAT_MARK.get()) {
             entity.setGlowingTag(false);
             entity.getPersistentData().remove(CASTER_UUID_TAG);
         }
